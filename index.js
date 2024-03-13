@@ -55,14 +55,22 @@ async function createCourse() {
 
 // You saw that this find method returns a DocumentQuery object. So we can customize this query. We can apply a limit(10), we can sort the documents using sort() method. We can add one or more key value pairs for sorting in object which is parameter of sort method. Let say we wanna sort these documents by their name. sort({ name: 1 }). ‘1’ indicates ascending order. If you wanna sort these documents descending order you use ‘-1’. We also have another method select(). And with this we can select the property that we want to return. For example, we only wanna get the name and tags property of each course document. select({ name:1, tags: 1}).
 
+// eq (equal)
+// ne (not equal)
+// gt (greater than)
+// gte (greater than or equal to )
+// lt (less than)
+// lte (less than or equal to)
+// in
+// nin (not in)
+
 async function getCourses() {
-  const courses = await Course.find({
-    author: 'Ibrahim',
-    isPublished: true,
-  })
-    .limit(10)
-    .sort({ name: 1 })
-    .select({ name: 1, tags: 1 });
+  const courses = await Course
+    // .find({ price: 10 }) // course that are equal to 10 dollars
+    // $ sign to indicate that this is an operator
+    // .find({ price: { $gt: 10 } }) // course that are greater than 10 dollars
+    // .find({ price: { $gt: 10, $lt: 20 } }); // course that are between 10 to 20 dollars
+    .find({ price: { $in: [10, 15, 20] } }); // course that are either 10 or 15 or 20 dollars
   console.log(courses);
 }
 getCourses();
