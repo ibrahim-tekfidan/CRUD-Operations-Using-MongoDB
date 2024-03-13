@@ -43,4 +43,28 @@ async function createCourse() {
   console.log(result);
 }
 
-createCourse();
+// Let me show you how to retrieve documents from a mongoDB database. Course class that we define earlier has bunch of methods for querying documents. We have find method to get list of documents, we have findById which is pretty self explanatory and we have findOne which returns single document. There are few different methods, we are going to look at them later. Let’s look at find method. This method return DocumentQuery object which is kind of promise object. So it has then method. So we can await it and get the result With this we get all the courses in our database.
+
+// We can also pass the filter in here. As the first argument to the find method. We pass an object and in this object we add one or more key value pairs for filtering. Let’s say we wanna get only the courses from ‘Ibrahim’.
+
+// We can pass another property (another filter) isPublished: true. So with this filter we only get the published courses by ‘Ibrahim’. So this is how we retrieve documents.Course.find({author: 'Ibrahim'})
+
+// We can set a limit on the number of documents that are returned. Course.find({ author: 'Ibrahim' }).limit(10)
+
+// We can also select specific property in the document. Let’s say our course documents have 50 properties. Maybe we don’t wanna return all these properties to the client. Perhaps we wanna return their name. Let me show you how to build more complex query.                              Course.find({ author: 'Ibrahim' }).select({ name: 1, tags: 1 });
+
+// You saw that this find method returns a DocumentQuery object. So we can customize this query. We can apply a limit(10), we can sort the documents using sort() method. We can add one or more key value pairs for sorting in object which is parameter of sort method. Let say we wanna sort these documents by their name. sort({ name: 1 }). ‘1’ indicates ascending order. If you wanna sort these documents descending order you use ‘-1’. We also have another method select(). And with this we can select the property that we want to return. For example, we only wanna get the name and tags property of each course document. select({ name:1, tags: 1}).
+
+async function getCourses() {
+  const courses = await Course.find({
+    author: 'Ibrahim',
+    isPublished: true,
+  })
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+  console.log(courses);
+}
+getCourses();
+
+// createCourse();
