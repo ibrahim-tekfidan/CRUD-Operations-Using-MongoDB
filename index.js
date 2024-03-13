@@ -27,10 +27,20 @@ const courseSchema = new mongoose.Schema({
 // The second argument is the schema that defines the shape of document in this collection so that is courseSchema. const Course =  mongoose.model(‘Course’,courseSchema ).
 
 // Once we have a schema we need to compile that to a model which gives us a class. Next we can create an object based on that class and this object maps to a document in a mongoDB database.
+
 const Course = mongoose.model('Course', courseSchema);
-const newCourse = new Course({
-  name: 'Node.js Course',
-  auther: 'Ibrahim',
-  tags: ['node', 'backend'],
-  isPublished: true,
-});
+
+// Here we are dealing with async operation. Because, it is going to take sometimes save this course into database. Because, we are going to access to file system. That’s why we are going to dealing with async operation. The result of this operation will be ready in the future. So this method returns a promise. We can await it and get the result. that is result is the actual course object that is saved in the database.
+async function createCourse() {
+  const course = new Course({
+    name: 'React.js Course',
+    author: 'Ibrahim',
+    tags: ['react', 'frontend'],
+    isPublished: true,
+  });
+
+  const result = await course.save();
+  console.log(result);
+}
+
+createCourse();
