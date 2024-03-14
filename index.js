@@ -65,30 +65,32 @@ async function createCourse() {
 // nin (not in)
 
 async function getCourses() {
-  // or
-  // and
-
   const courses = await Course
+
+    // This returns count of documents that match this { author: 'Ibrahim', isPublished: true } critera
+    .find({ author: 'Ibrahim', isPublished: true })
+    .count()
+
     // In belove, we getting courses who is author is exactly 'Ibrahim'
     // If we have a course with auther Ibrahimfegh or Ibrahim Tekfidan,those courses will not be return.
     // If we wanna have more control over strings, you need to use regular expression
     // /pattern/ -> This is the syntax for representing a regex.
-    .find({ author: 'Ibrahim' })
+    // .find({ author: 'Ibrahim' })
 
     // Starts with Ibrahim
-    .find({ author: /^Ibrahim/ })
+    // .find({ author: /^Ibrahim/ })
 
     // Ends with Tekfidan
-    .find({ author: /Tekfidan$/i })
+    // .find({ author: /Tekfidan$/i })
     // By default regex queries case sensitive. If you make it case insensitive, we append 'i' at the end.
 
     // Contains Ibrahim
-    .find({ author: /.*Ibrahim.*/i })
+    // .find({ author: /.*Ibrahim.*/i })
 
     // each object is a filter. Just like the filter object that we pass to the find method.
-    .or([{ author: 'Ibrahim' }, { isPublished: true }])
+    // .or([{ author: 'Ibrahim' }, { isPublished: true }])
     // The and logical operator is exactly the same. So instead of using the or method we use find().and() method.with this we pass array of filter objects. This is technically similar to passing a filter object to the find method. But sometimes in more complex queries, you may find a place for using the and method
-    .and()
+    // .and()
     // .find({ price: 10 }) // course that are equal to 10 dollars
     // $ sign to indicate that this is an operator
     // .find({ price: { $gt: 10 } }) // course that are greater than 10 dollars
