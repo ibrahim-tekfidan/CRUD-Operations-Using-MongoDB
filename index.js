@@ -65,11 +65,18 @@ async function createCourse() {
 // nin (not in)
 
 async function getCourses() {
-  const courses = await Course
+  // We hard coded pageNumber and pageSize numbers purely for simplicity but in a real-world application we pass these values as query string parameters to our RESTful APIs. You might have a API to get list of courses and endpoint can get query string parameters like this -> /api/courses?pageNumber=2&pageSize=10
+  // In order to implement pagination, we need to skip all the documents in the previous page. Assuming that page number starts from 1
+  const pageNumber = 2;
+  const pageSize = 10;
+
+  const courses = await Course.find({ author: 'Ibrahim' })
+    .skip((pageSize - 1) * pageNumber)
+    .limit(pageSize)
 
     // This returns count of documents that match this { author: 'Ibrahim', isPublished: true } critera
-    .find({ author: 'Ibrahim', isPublished: true })
-    .count()
+    // .find({ author: 'Ibrahim', isPublished: true })
+    // .count()
 
     // In belove, we getting courses who is author is exactly 'Ibrahim'
     // If we have a course with auther Ibrahimfegh or Ibrahim Tekfidan,those courses will not be return.
