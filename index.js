@@ -65,13 +65,20 @@ async function createCourse() {
 // nin (not in)
 
 async function getCourses() {
-  const courses = await Course
+  // or
+  // and
+
+  const courses = await Course.find()
+    // each object is a filter. Just like the filter object that we pass to the find method.
+    .or([{ author: 'Ibrahim' }, { isPublished: true }])
+    // The and logical operator is exactly the same. So instead of using the or method we use find().and() method.with this we pass array of filter objects. This is technically similar to passing a filter object to the find method. But sometimes in more complex queries, you may find a place for using the and method
+    .and()
     // .find({ price: 10 }) // course that are equal to 10 dollars
     // $ sign to indicate that this is an operator
     // .find({ price: { $gt: 10 } }) // course that are greater than 10 dollars
     // .find({ price: { $gt: 10, $lt: 20 } }); // course that are between 10 to 20 dollars
-    .find({ price: { $in: [10, 15, 20] } }); // course that are either 10 or 15 or 20 dollars
-  console.log(courses);
+    // .find({ price: { $in: [10, 15, 20] } }); // course that are either 10 or 15 or 20 dollars
+    .console.log(courses);
 }
 getCourses();
 
